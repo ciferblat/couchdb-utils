@@ -1,0 +1,26 @@
+{
+  "name": "couchdb-utils",
+  "description": "CouchDB utils",
+  "version": "0.0.1",
+  "keywords": ["couchdb", "database", "couch", "cradle"]
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paseek/couchdb-utils.git"
+  },
+  "author": {
+    "name": "Sergey Pronyakin",
+    "email": "s.pronyakin@gmail.com"
+  },
+  "main": "./index.js",
+  "directories": {
+    "lib": "."
+  },
+  "dependencies": {
+    "semver": ">=1.1.5",
+    "cradle": ">=0.6.5"
+  },
+  "engines": {
+    "node": ">=0.6.0"
+  },
+  "readmeFilename": "README.md"
+}
