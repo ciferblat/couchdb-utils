@@ -2,7 +2,7 @@
   "name": "couchdb-utils",
   "description": "CouchDB utils",
   "version": "0.0.1",
-  "keywords": ["couchdb", "database", "couch", "cradle"]
+  "keywords": ["couchdb", "database", "couch", "cradle"],
   "repository": {
     "type": "git",
     "url": "https://github.com/paseek/couchdb-utils.git"
@@ -16,7 +16,7 @@
     "lib": "."
   },
   "dependencies": {
-    "semver": ">=1.1.5",
+    "semver": ">=1.1.0",
     "cradle": ">=0.6.5"
   },
   "engines": {
