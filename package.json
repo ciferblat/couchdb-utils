@@ -1,7 +1,7 @@
 {
   "name": "couchdb-utils",
   "description": "CouchDB utils",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "keywords": ["couchdb", "database", "couch", "cradle"],
   "repository": {
     "type": "git",
