@@ -14,19 +14,19 @@ Usage
 
 Create a database if it doesn't exist:
 
-	var cradle = require('cradle'),
-	    cutils = require('couchdb-utils');
+    var cradle = require('cradle'),
+        cutils = require('couchdb-utils');
 
     var db = new (cradle.Connection)().database('my-db');
 	
-	db.createIfNotExists(function(err, existed) {
+    db.createIfNotExists(function(err, existed) {
         if (!err && !existed) console.log('The database has been successfully created.');
     });
 
 Manage versioning and updates of couchdb design documents: (based on [grave](https://github.com/substack/node-grave) project).
 
-	var cradle = require('cradle'),
-	    cutils = require('couchdb-utils');
+    var cradle = require('cradle'),
+        cutils = require('couchdb-utils');
 
     var db = new (cradle.Connection)().database('my-database');
     var design = new cutils.Design(db, 'my-view', '0.0.2');
@@ -34,42 +34,54 @@ Manage versioning and updates of couchdb design documents: (based on [grave](htt
     design.view('all', {
         map : function (doc) {
             if (doc.type === 'my-doc') emit(doc._id, 1);
-        },
+        }
     });
     
     design.end(function(err) {
-		console.log('all views are up-to-date');
-	});
+        console.log('all views are up-to-date');
+    });
 
 Design views, lists and updates
-=======
+-------------------------------
 
-db.design(name, version)
-------------------------
+**new Design(db, name, version)**
 
-Start a design with a `name` and a `version`.
+Create a design with a `name` and a `version`.
+`db` is an instance of cradle.Database.
 The`version` should be understood by
 [semver](https://github.com/isaacs/node-semver).
 
-design.view(name, view)
------------------------
+    var cradle = require('cradle'),
+        cutils = require('couchdb-utils');
+
+    var db = new (cradle.Connection)().database('my-database');
+    var design = new cutils.Design(db, 'my-view', '0.0.2');
+
+**design.view(name, view)**
 
 Define a couchdb view. CouchDB views have `map`, `reduce`, and fields of that
 sort.
 
-design.list(name, list)
------------------------
+    design.view('all', {
+        map : function (doc) {
+            if (doc.type === 'my-doc') emit(doc._id, 1);
+        }
+    });
+    
+**design.list(name, list)**
 
 Define a couchdb list. CouchDB lists are functions that look like
 `function (head, req) { /* ... */ }`.
 
-design.update(name, update)
----------------------------
+**design.update(name, update)**
 
 Define a couchdb update. These look like `function (doc, req) { /* ... */ }`.
 
-design.end(callback)
---------------
+**design.end(callback)**
 
 Declare the end of the design document definitions and save them to couchdb when
 the design version is greater than the couchdb version.
+
+    design.end(function(err) {
+        console.log('all views are up-to-date');
+    });
