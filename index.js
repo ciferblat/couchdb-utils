@@ -6,14 +6,15 @@ var exports = module.exports;
 var Database = cradle.Database;
 
 Database.prototype.createIfNotExists = function(callback) {
-    this.exists(function(err, exists) {
+    var self = this;
+    self.exists(function(err, exists) {
         if (err) {
             callback(err)
         } else {
             if (exists) {
                 callback(null, exists)
             } else {
-                this.create(function(err) {
+                self.create(function(err) {
                     callback(err, exists);
                 });
             }
@@ -64,26 +65,28 @@ Design.prototype.end = function(callback) {
     var name = this.name;
     var doc = this.document;
 
-    db.get('_design/' + name, function(e, ex) {
-        if (ex && !semver.valid(ex.version)) {
+    db.get('_design/' + name, function(err, designDoc) {
+        if (designDoc && !semver.valid(designDoc.version)) {
             cb(new Error(
                 'Invalid version in database view '
                     + JSON.stringify(name)
                     + ' : '
-                    + JSON.stringify(ex.version)
+                    + JSON.stringify(designDoc.version)
             ));
-        }
-        else if (e && e.error === 'not_found') {
-            db.save(doc._id, doc, cb);
-        }
-        else if (e) {
-            cb(e);
-        }
-        else if (semver.gt(ex.version, doc.version)) {
-            cb('Rollbacks not yet implemented');
-        }
-        else if (semver.gt(doc.version, ex.version)) {
-            db.save(doc._id, doc, cb);
+        } else {
+            if (err && err.error === 'not_found') {
+                db.save(doc._id, doc, cb);
+            } else {
+                if (err) {
+                    cb(err);
+                } else {
+                    if (semver.gte(designDoc.version, doc.version)) {
+                        cb();
+                    } else {
+                        db.save(doc._id, doc, cb);
+                    }
+                }
+            }
         }
     });
 };
