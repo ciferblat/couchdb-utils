@@ -1,6 +1,17 @@
 couchdb-utils
 =====
 
+Installation
+------------
+
+To install via NPM type the following: `npm install couchdb-utils`
+
+You can also install via git by cloning: `git clone https://github.com/paseek/couchdb-utils.git /path/to/your/dir`
+
+
+Usage
+-----
+
 Create a database if it doesn't exist:
 
 	var cradle = require('cradle'),
@@ -8,8 +19,8 @@ Create a database if it doesn't exist:
 
     var db = new (cradle.Connection)().database('my-db');
 	
-	db.createIfNotExists(function(err, exists) {
-        if (!err && !exists) console.log('The database has been successfully created.');
+	db.createIfNotExists(function(err, existed) {
+        if (!err && !existed) console.log('The database has been successfully created.');
     });
 
 Manage versioning and updates of couchdb design documents: (based on [grave](https://github.com/substack/node-grave) project).
