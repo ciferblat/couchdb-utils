@@ -28,7 +28,7 @@ var Design = exports.Design = function(db, name, version) {
 
     this.document = {
         _id: '_design/' + name,
-        version: version,
+        version: version
     };
 
     if (!semver.valid(version)) {
@@ -65,7 +65,7 @@ Design.prototype.end = function(callback) {
     var name = this.name;
     var doc = this.document;
 
-    db.get('_design/' + name, function(err, designDoc) {
+    db.get(doc._id, function(err, designDoc) {
         if (designDoc && !semver.valid(designDoc.version)) {
             cb(new Error(
                 'Invalid version in database view '
