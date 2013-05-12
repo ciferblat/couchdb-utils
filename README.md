@@ -1,7 +1,18 @@
 couchdb-utils
 =====
 
-Management of versioning and updates of couchdb design documents is based on [grave](https://github.com/substack/node-grave) project.
+Create a database if it doesn't exist:
+
+	var cradle = require('cradle'),
+	    cutils = require('couchdb-utils');
+
+    var db = new (cradle.Connection)().database('my-db');
+	
+	db.createIfNotExists(function(err, exists) {
+        if (!err && !exists) console.log('The database has been successfully created.');
+    });
+
+Manage versioning and updates of couchdb design documents: (based on [grave](https://github.com/substack/node-grave) project).
 
 	var cradle = require('cradle'),
 	    cutils = require('couchdb-utils');
